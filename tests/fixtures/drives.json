@@ -1,0 +1,230 @@
+{
+  "capturedFor": "drives",
+  "capturedBy": "tests/harness/record.js",
+  "scrubbed": true,
+  "traffic": [
+    {
+      "kind": "eval",
+      "payload": "(() => {\n  return {\n    isOpen: location.href.includes('multcloud.com'),\n    url: location.href,\n    isLoggedIn: !location.href.includes('sign.html') && !location.href.includes('login.html')\n  };\n})()",
+      "stdout": "{\n  \"isLoggedIn\": true,\n  \"isOpen\": true,\n  \"url\": \"https://app.multcloud.com/mc_project/shares\"\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n  return {\n    isOpen: location.href.includes('multcloud.com'),\n    url: location.href,\n    isLoggedIn: !location.href.includes('sign.html') && !location.href.includes('login.html')\n  };\n})()",
+      "stdout": "{\n  \"isLoggedIn\": true,\n  \"isOpen\": true,\n  \"url\": \"https://app.multcloud.com/mc_project/shares\"\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => location.href)()",
+      "stdout": "https://app.multcloud.com/mc_project/shares\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n  return {\n    isOpen: location.href.includes('multcloud.com'),\n    url: location.href,\n    isLoggedIn: !location.href.includes('sign.html') && !location.href.includes('login.html')\n  };\n})()",
+      "stdout": "{\n  \"isLoggedIn\": true,\n  \"isOpen\": true,\n  \"url\": \"https://app.multcloud.com/mc_project/shares\"\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n    const wantedSection = \"Manage Clouds and Emails\";\n    const el = Array.from(document.querySelectorAll('a, div, span, li'))\n      .find(e => e.innerText && e.innerText.trim() === wantedSection);\n    if (el) { el.click(); return { clicked: true }; }\n    return { clicked: false };\n  })()",
+      "stdout": "{\n  \"clicked\": true\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n  return {\n    isOpen: location.href.includes('multcloud.com'),\n    url: location.href,\n    isLoggedIn: !location.href.includes('sign.html') && !location.href.includes('login.html')\n  };\n})()",
+      "stdout": "{\n  \"isLoggedIn\": true,\n  \"isOpen\": true,\n  \"url\": \"https://app.multcloud.com/mc_project/home_page\"\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => location.href)()",
+      "stdout": "https://app.multcloud.com/mc_project/home_page\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n  return {\n    isOpen: location.href.includes('multcloud.com'),\n    url: location.href,\n    isLoggedIn: !location.href.includes('sign.html') && !location.href.includes('login.html')\n  };\n})()",
+      "stdout": "{\n  \"isLoggedIn\": true,\n  \"isOpen\": true,\n  \"url\": \"https://app.multcloud.com/mc_project/home_page\"\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(async () => {\n    const sleep = (ms) => new Promise(r => setTimeout(r, ms));\n    const keys = [\"clouds\",\"allLoadDrivesArr\",\"allDrivesArr\"];\n    const deadline = Date.now() + 10000;\n\n    const collect = () => {\n      const byId = new Map();\n      const sources = [];\n      const comps = Array.from(document.querySelectorAll('*')).map(e => e.__vue__).filter(Boolean);\n      for (const key of keys) {\n        let seen = 0;\n        for (const c of comps) {\n          let v;\n          try { v = (c && c[key] !== undefined) ? c[key] : (c && c.$data ? c.$data[key] : undefined); } catch (e) { continue; }\n          if (!Array.isArray(v) || !v.length) continue;\n          seen += v.length;\n          for (const d of v) {\n            if (!d) continue;\n            const info = d.driveInfo || {};\n            const id = d.id || d.keyId || info.id || '';\n            const name = String(d.name || info.name || d.cloudName || d.showName || '').trim();\n            if (!id || !name) continue;\n            if (byId.has(id)) continue;\n            byId.set(id, {\n              name,\n              id,\n              driveType: d.driveType || info.cloudName || d.type || '',\n              rootId: d.rootId || info.rootId || '/',\n              // Bytes, straight from the page model, or null when this drive's\n              // quota has not been fetched. Never 0 — that is a real answer.\n              usedBytes: Number.isFinite(info.usedSpace) ? info.usedSpace : null,\n              totalBytes: Number.isFinite(info.totalSpace) ? info.totalSpace : null\n            });\n          }\n        }\n        if (seen) sources.push(key);\n      }\n      return { drives: Array.from(byId.values()), sources };\n    };\n\n    let best = collect();\n    while (Date.now() < deadline && best.drives.length === 0) {\n      await sleep(250);\n      best = collect();\n    }\n    if (!best.drives.length) return { ok: false, error: 'The page did not expose a drive list.' };\n    return { ok: true, source: best.sources.join('+'), sources: best.sources, drives: best.drives };\n  })()",
+      "stdout": "{\n  \"drives\": [\n    {\n      \"driveType\": \"baiDu\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxxx1\",\n      \"name\": \"Sample Item 2\",\n      \"rootId\": \"/\",\n      \"totalBytes\": 17613660880896,\n      \"usedBytes\": 16977124491214\n    },\n    {\n      \"driveType\": \"gmail\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxxx2\",\n      \"name\": \"Sample Item 3\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 0,\n      \"usedBytes\": 0\n    },\n    {\n      \"driveType\": \"gmail\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxxx3\",\n      \"name\": \"Sample Item 4\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 0,\n      \"usedBytes\": 0\n    },\n    {\n      \"driveType\": \"gmail\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxxx4\",\n      \"name\": \"Sample Item 5\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 0,\n      \"usedBytes\": 0\n    },\n    {\n      \"driveType\": \"gSuite\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxxx5\",\n      \"name\": \"Sample Item 6\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 5497558138880,\n      \"usedBytes\": 12939105259\n    },\n    {\n      \"driveType\": \"google_drive\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxxx6\",\n      \"name\": \"Sample Item 7\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 193745974722560,\n      \"usedBytes\": 59337881133191\n    },\n    {\n      \"driveType\": \"gSuite\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxxx7\",\n      \"name\": \"Sample Item 8\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 16106127360,\n      \"usedBytes\": 1828892895934\n    },\n    {\n      \"driveType\": \"google_drive\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxxx8\",\n      \"name\": \"Sample Item 9\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 16106127360,\n      \"usedBytes\": 52405266\n    },\n    {\n      \"driveType\": \"gSuite\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxxx9\",\n      \"name\": \"Sample Item 10\",\n      \"rootId\": \"root\",\n      \"totalBytes\": null,\n      \"usedBytes\": null\n    },\n    {\n      \"driveType\": \"google_drive\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx10\",\n      \"name\": \"Sample Item 11\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 5497558138880,\n      \"usedBytes\": 1118571988394\n    },\n    {\n      \"driveType\": \"gSuite\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx11\",\n      \"name\": \"Sample Item 12\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 107374182400,\n      \"usedBytes\": 107399030746\n    },\n    {\n      \"driveType\": \"google_drive\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx12\",\n      \"name\": \"Sample Item 13\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 16106127360,\n      \"usedBytes\": 98432\n    },\n    {\n      \"driveType\": \"google_drive\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx13\",\n      \"name\": \"Sample Item 14\",\n      \"rootId\": \"root\",\n      \"totalBytes\": null,\n      \"usedBytes\": null\n    },\n    {\n      \"driveType\": \"google_drive\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx14\",\n      \"name\": \"Sample Item 15\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 16106127360,\n      \"usedBytes\": 1195466\n    },\n    {\n      \"driveType\": \"google_drive_sharedWithMe\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx15\",\n      \"name\": \"Sample Item 16\",\n      \"rootId\": \"sharedWithMe\",\n      \"totalBytes\": 107374182400,\n      \"usedBytes\": 107399030746\n    },\n    {\n      \"driveType\": \"googlePhotos\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx16\",\n      \"name\": \"Sample Item 17\",\n      \"rootId\": \"/\",\n      \"totalBytes\": 0,\n      \"usedBytes\": 0\n    },\n    {\n      \"driveType\": \"googlePhotos\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx17\",\n      \"name\": \"Sample Item 18\",\n      \"rootId\": \"/\",\n      \"totalBytes\": 0,\n      \"usedBytes\": 0\n    },\n    {\n      \"driveType\": \"oneDrive4Business\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx18\",\n      \"name\": \"Sample Item 19\",\n      \"rootId\": \"/\",\n      \"totalBytes\": null,\n      \"usedBytes\": null\n    },\n    {\n      \"driveType\": \"oneDriveV2\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx19\",\n      \"name\": \"Sample Item 20\",\n      \"rootId\": \"/\",\n      \"totalBytes\": null,\n      \"usedBytes\": null\n    },\n    {\n      \"driveType\": \"oneDriveV2\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx20\",\n      \"name\": \"Sample Item 21\",\n      \"rootId\": \"/\",\n      \"totalBytes\": 5368709120,\n      \"usedBytes\": 1151898\n    },\n    {\n      \"driveType\": \"oneDriveV2\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx21\",\n      \"name\": \"Sample Item 22\",\n      \"rootId\": \"/\",\n      \"totalBytes\": null,\n      \"usedBytes\": null\n    }\n  ],\n  \"ok\": true,\n  \"source\": \"clouds+allLoadDrivesArr\",\n  \"sources\": [\n    \"clouds\",\n    \"allLoadDrivesArr\"\n  ]\n}\n"
+    }
+  ],
+  "result": {
+    "drives": [
+      {
+        "driveType": "baiDu",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxxx1",
+        "name": "Sample Item 2",
+        "rootId": "/",
+        "totalBytes": 17613660880896,
+        "usedBytes": 16977124491214
+      },
+      {
+        "driveType": "gmail",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxxx2",
+        "name": "Sample Item 3",
+        "rootId": "root",
+        "totalBytes": 0,
+        "usedBytes": 0
+      },
+      {
+        "driveType": "gmail",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxxx3",
+        "name": "Sample Item 4",
+        "rootId": "root",
+        "totalBytes": 0,
+        "usedBytes": 0
+      },
+      {
+        "driveType": "gmail",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxxx4",
+        "name": "Sample Item 5",
+        "rootId": "root",
+        "totalBytes": 0,
+        "usedBytes": 0
+      },
+      {
+        "driveType": "gSuite",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxxx5",
+        "name": "Sample Item 6",
+        "rootId": "root",
+        "totalBytes": 5497558138880,
+        "usedBytes": 12939105259
+      },
+      {
+        "driveType": "google_drive",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxxx6",
+        "name": "Sample Item 7",
+        "rootId": "root",
+        "totalBytes": 193745974722560,
+        "usedBytes": 59337881133191
+      },
+      {
+        "driveType": "gSuite",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxxx7",
+        "name": "Sample Item 8",
+        "rootId": "root",
+        "totalBytes": 16106127360,
+        "usedBytes": 1828892895934
+      },
+      {
+        "driveType": "google_drive",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxxx8",
+        "name": "Sample Item 9",
+        "rootId": "root",
+        "totalBytes": 16106127360,
+        "usedBytes": 52405266
+      },
+      {
+        "driveType": "gSuite",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxxx9",
+        "name": "Sample Item 10",
+        "rootId": "root",
+        "totalBytes": null,
+        "usedBytes": null
+      },
+      {
+        "driveType": "google_drive",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx10",
+        "name": "Sample Item 11",
+        "rootId": "root",
+        "totalBytes": 5497558138880,
+        "usedBytes": 1118571988394
+      },
+      {
+        "driveType": "gSuite",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx11",
+        "name": "Sample Item 12",
+        "rootId": "root",
+        "totalBytes": 107374182400,
+        "usedBytes": 107399030746
+      },
+      {
+        "driveType": "google_drive",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx12",
+        "name": "Sample Item 13",
+        "rootId": "root",
+        "totalBytes": 16106127360,
+        "usedBytes": 98432
+      },
+      {
+        "driveType": "google_drive",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx13",
+        "name": "Sample Item 14",
+        "rootId": "root",
+        "totalBytes": null,
+        "usedBytes": null
+      },
+      {
+        "driveType": "google_drive",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx14",
+        "name": "Sample Item 15",
+        "rootId": "root",
+        "totalBytes": 16106127360,
+        "usedBytes": 1195466
+      },
+      {
+        "driveType": "google_drive_sharedWithMe",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx15",
+        "name": "Sample Item 16",
+        "rootId": "sharedWithMe",
+        "totalBytes": 107374182400,
+        "usedBytes": 107399030746
+      },
+      {
+        "driveType": "googlePhotos",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx16",
+        "name": "Sample Item 17",
+        "rootId": "/",
+        "totalBytes": 0,
+        "usedBytes": 0
+      },
+      {
+        "driveType": "googlePhotos",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx17",
+        "name": "Sample Item 18",
+        "rootId": "/",
+        "totalBytes": 0,
+        "usedBytes": 0
+      },
+      {
+        "driveType": "oneDrive4Business",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx18",
+        "name": "Sample Item 19",
+        "rootId": "/",
+        "totalBytes": null,
+        "usedBytes": null
+      },
+      {
+        "driveType": "oneDriveV2",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx19",
+        "name": "Sample Item 20",
+        "rootId": "/",
+        "totalBytes": null,
+        "usedBytes": null
+      },
+      {
+        "driveType": "oneDriveV2",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx20",
+        "name": "Sample Item 21",
+        "rootId": "/",
+        "totalBytes": 5368709120,
+        "usedBytes": 1151898
+      },
+      {
+        "driveType": "oneDriveV2",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx21",
+        "name": "Sample Item 22",
+        "rootId": "/",
+        "totalBytes": null,
+        "usedBytes": null
+      }
+    ],
+    "ok": true,
+    "source": "clouds+allLoadDrivesArr",
+    "sources": [
+      "clouds",
+      "allLoadDrivesArr"
+    ]
+  }
+}

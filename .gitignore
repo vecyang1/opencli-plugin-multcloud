@@ -1,0 +1,13 @@
+node_modules/
+
+# Baidu Netdisk desktop client writes transient upload-state files into any
+# folder it syncs. They are not project files and change constantly.
+*.baiduyun.uploading.cfg
+.*.baiduyun.uploading.cfg
+
+# macOS
+.DS_Store
+
+# Python bytecode from the publish toolchain
+__pycache__/
+*.pyc

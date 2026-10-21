@@ -1,0 +1,6 @@
+{
+  "name": "multcloud",
+  "version": "1.0.0",
+  "description": "Drive MultCloud (cloud transfer, sync, backup, remote upload, Cloud Explorer, task observability) from the command line",
+  "opencli": ">=1.8.7"
+}

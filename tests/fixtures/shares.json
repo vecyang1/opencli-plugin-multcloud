@@ -1,0 +1,59 @@
+{
+  "capturedFor": "shares",
+  "capturedBy": "tests/harness/record.js",
+  "scrubbed": true,
+  "traffic": [
+    {
+      "kind": "eval",
+      "payload": "(() => {\n  return {\n    isOpen: location.href.includes('multcloud.com'),\n    url: location.href,\n    isLoggedIn: !location.href.includes('sign.html') && !location.href.includes('login.html')\n  };\n})()",
+      "stdout": "{\n  \"isLoggedIn\": true,\n  \"isOpen\": true,\n  \"url\": \"https://app.multcloud.com/mc_project/home_page\"\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n  return {\n    isOpen: location.href.includes('multcloud.com'),\n    url: location.href,\n    isLoggedIn: !location.href.includes('sign.html') && !location.href.includes('login.html')\n  };\n})()",
+      "stdout": "{\n  \"isLoggedIn\": true,\n  \"isOpen\": true,\n  \"url\": \"https://app.multcloud.com/mc_project/home_page\"\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => location.href)()",
+      "stdout": "https://app.multcloud.com/mc_project/home_page\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n  return {\n    isOpen: location.href.includes('multcloud.com'),\n    url: location.href,\n    isLoggedIn: !location.href.includes('sign.html') && !location.href.includes('login.html')\n  };\n})()",
+      "stdout": "{\n  \"isLoggedIn\": true,\n  \"isOpen\": true,\n  \"url\": \"https://app.multcloud.com/mc_project/home_page\"\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n    const wantedSection = \"Shares\";\n    const el = Array.from(document.querySelectorAll('a, div, span, li'))\n      .find(e => e.innerText && e.innerText.trim() === wantedSection);\n    if (el) { el.click(); return { clicked: true }; }\n    return { clicked: false };\n  })()",
+      "stdout": "{\n  \"clicked\": true\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n  return {\n    isOpen: location.href.includes('multcloud.com'),\n    url: location.href,\n    isLoggedIn: !location.href.includes('sign.html') && !location.href.includes('login.html')\n  };\n})()",
+      "stdout": "{\n  \"isLoggedIn\": true,\n  \"isOpen\": true,\n  \"url\": \"https://app.multcloud.com/mc_project/shares\"\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => location.href)()",
+      "stdout": "https://app.multcloud.com/mc_project/shares\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n  return {\n    isOpen: location.href.includes('multcloud.com'),\n    url: location.href,\n    isLoggedIn: !location.href.includes('sign.html') && !location.href.includes('login.html')\n  };\n})()",
+      "stdout": "{\n  \"isLoggedIn\": true,\n  \"isOpen\": true,\n  \"url\": \"https://app.multcloud.com/mc_project/shares\"\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n    const rows = Array.from(document.querySelectorAll('.el-table__row, table tbody tr, .share-item'));\n    const items = [];\n\n    rows.forEach(r => {\n      const cols = Array.from(r.querySelectorAll('td, .cell')).map(c => c.innerText.trim()).filter(Boolean);\n      if (cols.length >= 3) {\n        const anchor = r.querySelector('a[href*=\"http\"]');\n        const linkText = cols.find(c => /^https?:\\/\\//i.test(c)) || '';\n        items.push({\n          // name and link are what the CLI renders; they used to be absent\n          // entirely, so every share printed undefined (undefined).\n          name: cols[0],\n          fileName: cols[0],\n          link: anchor?.getAttribute('href') || linkText || null,\n          type: cols[1] || 'File',\n          size: cols[2] || 'N/A',\n          sharedOn: cols[3] || 'N/A',\n          allowUpload: cols[4] || 'No'\n        });\n      }\n    });\n\n    const bodyText = document.body.innerText;\n    const isEmpty = bodyText.includes('haven’t shared any file yet') || items.length === 0;\n\n    return {\n      ok: true,\n      count: items.length,\n      isEmpty,\n      shares: items,\n      summary: isEmpty ? 'You haven’t shared any file yet.' : `Found ${items.length} shared files.`\n    };\n  })()",
+      "stdout": "{\n  \"count\": 0,\n  \"isEmpty\": true,\n  \"ok\": true,\n  \"shares\": [],\n  \"summary\": \"Sample Item 59\"\n}\n"
+    }
+  ],
+  "result": {
+    "count": 0,
+    "isEmpty": true,
+    "ok": true,
+    "shares": [],
+    "summary": "Sample Item 59"
+  }
+}

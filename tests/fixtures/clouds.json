@@ -1,0 +1,373 @@
+{
+  "capturedFor": "clouds",
+  "capturedBy": "tests/harness/record.js",
+  "scrubbed": true,
+  "traffic": [
+    {
+      "kind": "eval",
+      "payload": "(() => {\n  return {\n    isOpen: location.href.includes('multcloud.com'),\n    url: location.href,\n    isLoggedIn: !location.href.includes('sign.html') && !location.href.includes('login.html')\n  };\n})()",
+      "stdout": "{\n  \"isLoggedIn\": true,\n  \"isOpen\": true,\n  \"url\": \"https://app.multcloud.com/mc_project/task_list\"\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n  return {\n    isOpen: location.href.includes('multcloud.com'),\n    url: location.href,\n    isLoggedIn: !location.href.includes('sign.html') && !location.href.includes('login.html')\n  };\n})()",
+      "stdout": "{\n  \"isLoggedIn\": true,\n  \"isOpen\": true,\n  \"url\": \"https://app.multcloud.com/mc_project/task_list\"\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => location.href)()",
+      "stdout": "https://app.multcloud.com/mc_project/task_list\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n  return {\n    isOpen: location.href.includes('multcloud.com'),\n    url: location.href,\n    isLoggedIn: !location.href.includes('sign.html') && !location.href.includes('login.html')\n  };\n})()",
+      "stdout": "{\n  \"isLoggedIn\": true,\n  \"isOpen\": true,\n  \"url\": \"https://app.multcloud.com/mc_project/task_list\"\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n    const wantedSection = \"Manage Clouds and Emails\";\n    const el = Array.from(document.querySelectorAll('a, div, span, li'))\n      .find(e => e.innerText && e.innerText.trim() === wantedSection);\n    if (el) { el.click(); return { clicked: true }; }\n    return { clicked: false };\n  })()",
+      "stdout": "{\n  \"clicked\": true\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n  return {\n    isOpen: location.href.includes('multcloud.com'),\n    url: location.href,\n    isLoggedIn: !location.href.includes('sign.html') && !location.href.includes('login.html')\n  };\n})()",
+      "stdout": "{\n  \"isLoggedIn\": true,\n  \"isOpen\": true,\n  \"url\": \"https://app.multcloud.com/mc_project/home_page\"\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => location.href)()",
+      "stdout": "https://app.multcloud.com/mc_project/home_page\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n  return {\n    isOpen: location.href.includes('multcloud.com'),\n    url: location.href,\n    isLoggedIn: !location.href.includes('sign.html') && !location.href.includes('login.html')\n  };\n})()",
+      "stdout": "{\n  \"isLoggedIn\": true,\n  \"isOpen\": true,\n  \"url\": \"https://app.multcloud.com/mc_project/home_page\"\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(async () => {\n    const sleep = (ms) => new Promise(r => setTimeout(r, ms));\n    const keys = [\"clouds\",\"allLoadDrivesArr\",\"allDrivesArr\"];\n    const deadline = Date.now() + 10000;\n\n    const collect = () => {\n      const byId = new Map();\n      const sources = [];\n      const comps = Array.from(document.querySelectorAll('*')).map(e => e.__vue__).filter(Boolean);\n      for (const key of keys) {\n        let seen = 0;\n        for (const c of comps) {\n          let v;\n          try { v = (c && c[key] !== undefined) ? c[key] : (c && c.$data ? c.$data[key] : undefined); } catch (e) { continue; }\n          if (!Array.isArray(v) || !v.length) continue;\n          seen += v.length;\n          for (const d of v) {\n            if (!d) continue;\n            const info = d.driveInfo || {};\n            const id = d.id || d.keyId || info.id || '';\n            const name = String(d.name || info.name || d.cloudName || d.showName || '').trim();\n            if (!id || !name) continue;\n            if (byId.has(id)) continue;\n            byId.set(id, {\n              name,\n              id,\n              driveType: d.driveType || info.cloudName || d.type || '',\n              rootId: d.rootId || info.rootId || '/',\n              // Bytes, straight from the page model, or null when this drive's\n              // quota has not been fetched. Never 0 — that is a real answer.\n              usedBytes: Number.isFinite(info.usedSpace) ? info.usedSpace : null,\n              totalBytes: Number.isFinite(info.totalSpace) ? info.totalSpace : null\n            });\n          }\n        }\n        if (seen) sources.push(key);\n      }\n      return { drives: Array.from(byId.values()), sources };\n    };\n\n    let best = collect();\n    while (Date.now() < deadline && best.drives.length === 0) {\n      await sleep(250);\n      best = collect();\n    }\n    if (!best.drives.length) return { ok: false, error: 'The page did not expose a drive list.' };\n    return { ok: true, source: best.sources.join('+'), sources: best.sources, drives: best.drives };\n  })()",
+      "stdout": "{\n  \"drives\": [\n    {\n      \"driveType\": \"baiDu\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxxx1\",\n      \"name\": \"Sample Item 2\",\n      \"rootId\": \"/\",\n      \"totalBytes\": 17613660880896,\n      \"usedBytes\": 16977124491214\n    },\n    {\n      \"driveType\": \"gmail\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxxx2\",\n      \"name\": \"Sample Item 3\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 0,\n      \"usedBytes\": 0\n    },\n    {\n      \"driveType\": \"gmail\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxxx3\",\n      \"name\": \"Sample Item 4\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 0,\n      \"usedBytes\": 0\n    },\n    {\n      \"driveType\": \"gmail\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxxx4\",\n      \"name\": \"Sample Item 5\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 0,\n      \"usedBytes\": 0\n    },\n    {\n      \"driveType\": \"gSuite\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxxx5\",\n      \"name\": \"Sample Item 6\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 5497558138880,\n      \"usedBytes\": 12939105259\n    },\n    {\n      \"driveType\": \"google_drive\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxxx6\",\n      \"name\": \"Sample Item 7\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 193745974722560,\n      \"usedBytes\": 59337881133191\n    },\n    {\n      \"driveType\": \"gSuite\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxxx7\",\n      \"name\": \"Sample Item 8\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 16106127360,\n      \"usedBytes\": 1828892895934\n    },\n    {\n      \"driveType\": \"google_drive\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxxx8\",\n      \"name\": \"Sample Item 9\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 16106127360,\n      \"usedBytes\": 52405266\n    },\n    {\n      \"driveType\": \"gSuite\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxxx9\",\n      \"name\": \"Sample Item 10\",\n      \"rootId\": \"root\",\n      \"totalBytes\": null,\n      \"usedBytes\": null\n    },\n    {\n      \"driveType\": \"google_drive\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx10\",\n      \"name\": \"Sample Item 11\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 5497558138880,\n      \"usedBytes\": 1118571988394\n    },\n    {\n      \"driveType\": \"gSuite\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx11\",\n      \"name\": \"Sample Item 12\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 107374182400,\n      \"usedBytes\": 107399030746\n    },\n    {\n      \"driveType\": \"google_drive\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx12\",\n      \"name\": \"Sample Item 13\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 16106127360,\n      \"usedBytes\": 98432\n    },\n    {\n      \"driveType\": \"google_drive\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx13\",\n      \"name\": \"Sample Item 14\",\n      \"rootId\": \"root\",\n      \"totalBytes\": null,\n      \"usedBytes\": null\n    },\n    {\n      \"driveType\": \"google_drive\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx14\",\n      \"name\": \"Sample Item 15\",\n      \"rootId\": \"root\",\n      \"totalBytes\": 16106127360,\n      \"usedBytes\": 1195466\n    },\n    {\n      \"driveType\": \"google_drive_sharedWithMe\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx15\",\n      \"name\": \"Sample Item 16\",\n      \"rootId\": \"sharedWithMe\",\n      \"totalBytes\": 107374182400,\n      \"usedBytes\": 107399030746\n    },\n    {\n      \"driveType\": \"googlePhotos\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx16\",\n      \"name\": \"Sample Item 17\",\n      \"rootId\": \"/\",\n      \"totalBytes\": 0,\n      \"usedBytes\": 0\n    },\n    {\n      \"driveType\": \"googlePhotos\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx17\",\n      \"name\": \"Sample Item 18\",\n      \"rootId\": \"/\",\n      \"totalBytes\": 0,\n      \"usedBytes\": 0\n    },\n    {\n      \"driveType\": \"oneDrive4Business\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx18\",\n      \"name\": \"Sample Item 19\",\n      \"rootId\": \"/\",\n      \"totalBytes\": null,\n      \"usedBytes\": null\n    },\n    {\n      \"driveType\": \"oneDriveV2\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx19\",\n      \"name\": \"Sample Item 20\",\n      \"rootId\": \"/\",\n      \"totalBytes\": null,\n      \"usedBytes\": null\n    },\n    {\n      \"driveType\": \"oneDriveV2\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx20\",\n      \"name\": \"Sample Item 21\",\n      \"rootId\": \"/\",\n      \"totalBytes\": 5368709120,\n      \"usedBytes\": 1151898\n    },\n    {\n      \"driveType\": \"oneDriveV2\",\n      \"id\": \"fakexxxxxxxxxxxxxxxxxxxxxxxxxx21\",\n      \"name\": \"Sample Item 22\",\n      \"rootId\": \"/\",\n      \"totalBytes\": null,\n      \"usedBytes\": null\n    }\n  ],\n  \"ok\": true,\n  \"source\": \"clouds+allLoadDrivesArr\",\n  \"sources\": [\n    \"clouds\",\n    \"allLoadDrivesArr\"\n  ]\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n  return {\n    isOpen: location.href.includes('multcloud.com'),\n    url: location.href,\n    isLoggedIn: !location.href.includes('sign.html') && !location.href.includes('login.html')\n  };\n})()",
+      "stdout": "{\n  \"isLoggedIn\": true,\n  \"isOpen\": true,\n  \"url\": \"https://app.multcloud.com/mc_project/home_page\"\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(async () => {\n    const sleep = (ms) => new Promise(r => setTimeout(r, ms));\n    const txt = (e) => e ? String(e.textContent || '').replace(/\\s+/g, ' ').trim() : '';\n\n    // Give the lazily-loaded capacity cards a moment, but never wait on them:\n    // several never resolve, and a timeout is not a value.\n    const deadline = Date.now() + 6000;\n    while (Date.now() < deadline) {\n      const boxes = document.querySelectorAll('.cloud-box').length;\n      const loading = Array.from(document.querySelectorAll('.drive-capacity')).filter(e => txt(e) === 'Loading').length;\n      if (boxes > 0 && loading === 0) break;\n      await sleep(300);\n    }\n\n    const capacities = Array.from(document.querySelectorAll('.cloud-box')).map(e => ({\n      name: txt(e.querySelector('.drive-bold-name')),\n      capacity: txt(e.querySelector('.drive-capacity'))\n    })).filter(x => x.name);\n\n    // The sidebar shows the account email, or the word \"Failed\" when the quota\n    // lookup did not come back. Same slot, two very different meanings.\n    const sidebar = Array.from(document.querySelectorAll('.menu-option')).map(o => ({\n      name: txt(o.querySelector('.option-title')) || txt(o).split(' ')[0],\n      full: txt(o),\n      desc: txt(o.querySelector('.option-desc'))\n    })).filter(x => x.desc);\n\n    return { ok: true, capacities, sidebar };\n  })()",
+      "stdout": "{\n  \"capacities\": [\n    {\n      \"capacity\": \"15.44TB/16.02TB\",\n      \"name\": \"Sample Item 2\"\n    },\n    {\n      \"capacity\": \"53.97TB/176.21TB\",\n      \"name\": \"Sample Item 7\"\n    },\n    {\n      \"capacity\": \"49.98MB/15GB\",\n      \"name\": \"Sample Item 9\"\n    },\n    {\n      \"capacity\": \"1.02TB/5TB\",\n      \"name\": \"Sample Item 11\"\n    },\n    {\n      \"capacity\": \"96.13KB/15GB\",\n      \"name\": \"Sample Item 13\"\n    },\n    {\n      \"capacity\": \"Failed\",\n      \"name\": \"Sample Item 14\"\n    },\n    {\n      \"capacity\": \"1.14MB/15GB\",\n      \"name\": \"Sample Item 15\"\n    },\n    {\n      \"capacity\": \"100.02GB/100GB\",\n      \"name\": \"Sample Item 16\"\n    },\n    {\n      \"capacity\": \"Failed\",\n      \"name\": \"Sample Item 19\"\n    },\n    {\n      \"capacity\": \"Failed\",\n      \"name\": \"Sample Item 20\"\n    },\n    {\n      \"capacity\": \"1.1MB/5GB\",\n      \"name\": \"Sample Item 21\"\n    },\n    {\n      \"capacity\": \"Failed\",\n      \"name\": \"Sample Item 22\"\n    }\n  ],\n  \"ok\": true,\n  \"sidebar\": [\n    {\n      \"desc\": \"Sample Item 23\",\n      \"full\": \"Sample Item 24\",\n      \"name\": \"Sample Item 25\"\n    },\n    {\n      \"desc\": \"redacted@example.invalid\",\n      \"full\": \"Sample Item 26\",\n      \"name\": \"Sample Item 27\"\n    },\n    {\n      \"desc\": \"redacted@example.invalid\",\n      \"full\": \"Sample Item 28\",\n      \"name\": \"Sample Item 27\"\n    },\n    {\n      \"desc\": \"redacted@example.invalid\",\n      \"full\": \"Sample Item 29\",\n      \"name\": \"Sample Item 30\"\n    },\n    {\n      \"desc\": \"redacted@example.invalid\",\n      \"full\": \"Sample Item 31\",\n      \"name\": \"Sample Item 6\"\n    },\n    {\n      \"desc\": \"redacted@example.invalid\",\n      \"full\": \"Sample Item 32\",\n      \"name\": \"Sample Item 7\"\n    },\n    {\n      \"desc\": \"redacted@example.invalid\",\n      \"full\": \"Sample Item 33\",\n      \"name\": \"Sample Item 8\"\n    },\n    {\n      \"desc\": \"redacted@example.invalid\",\n      \"full\": \"Sample Item 34\",\n      \"name\": \"Sample Item 35\"\n    },\n    {\n      \"desc\": \"Sample Item 36\",\n      \"full\": \"Sample Item 37\",\n      \"name\": \"Sample Item 38\"\n    },\n    {\n      \"desc\": \"redacted@example.invalid\",\n      \"full\": \"Sample Item 39\",\n      \"name\": \"Sample Item 11\"\n    },\n    {\n      \"desc\": \"redacted@example.invalid\",\n      \"full\": \"Sample Item 40\",\n      \"name\": \"Sample Item 12\"\n    },\n    {\n      \"desc\": \"redacted@example.invalid\",\n      \"full\": \"Sample Item 41\",\n      \"name\": \"2026-08-22\"\n    },\n    {\n      \"desc\": \"Sample Item 36\",\n      \"full\": \"Sample Item 42\",\n      \"name\": \"250524\"\n    },\n    {\n      \"desc\": \"redacted@example.invalid\",\n      \"full\": \"Sample Item 43\",\n      \"name\": \"Sample Item 44\"\n    },\n    {\n      \"desc\": \"redacted@example.invalid\",\n      \"full\": \"Sample Item 45\",\n      \"name\": \"Sample Item 46\"\n    },\n    {\n      \"desc\": \"redacted@example.invalid\",\n      \"full\": \"Sample Item 47\",\n      \"name\": \"Sample Item 44\"\n    },\n    {\n      \"desc\": \"redacted@example.invalid\",\n      \"full\": \"Sample Item 48\",\n      \"name\": \"Sample Item 44\"\n    },\n    {\n      \"desc\": \"Sample Item 36\",\n      \"full\": \"Sample Item 49\",\n      \"name\": \"Sample Item 50\"\n    },\n    {\n      \"desc\": \"Sample Item 36\",\n      \"full\": \"Sample Item 51\",\n      \"name\": \"Sample Item 52\"\n    },\n    {\n      \"desc\": \"redacted@example.invalid\",\n      \"full\": \"Sample Item 53\",\n      \"name\": \"Sample Item 54\"\n    },\n    {\n      \"desc\": \"Sample Item 36\",\n      \"full\": \"Sample Item 55\",\n      \"name\": \"Sample Item 56\"\n    }\n  ]\n}\n"
+    }
+  ],
+  "result": {
+    "ok": true,
+    "totalCount": 21,
+    "count": 21,
+    "returnedCount": 21,
+    "limited": false,
+    "quotaOkCount": 16,
+    "quotaUnavailableCount": 5,
+    "quotaUnknownCount": 0,
+    "capacityUnreadableCount": 5,
+    "rosterSource": "Sample Item 57",
+    "warnings": [
+      "Sample Item 58"
+    ],
+    "clouds": [
+      {
+        "name": "Sample Item 2",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxxx1",
+        "type": "Baidu Netdisk",
+        "driveType": "baiDu",
+        "email": "",
+        "usedBytes": 16977124491214,
+        "totalBytes": 17613660880896,
+        "used": "15.44TB",
+        "total": "16.02TB",
+        "capacity": "15.44TB/16.02TB",
+        "capacityKnown": true,
+        "quota": "ok"
+      },
+      {
+        "name": "Sample Item 3",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxxx2",
+        "type": "Gmail",
+        "driveType": "gmail",
+        "email": "redacted@example.invalid",
+        "usedBytes": 0,
+        "totalBytes": 0,
+        "used": "0Bytes",
+        "total": "0Bytes",
+        "capacity": "0Bytes/0Bytes",
+        "capacityKnown": true,
+        "quota": "ok"
+      },
+      {
+        "name": "Sample Item 4",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxxx3",
+        "type": "Gmail",
+        "driveType": "gmail",
+        "email": "redacted@example.invalid",
+        "usedBytes": 0,
+        "totalBytes": 0,
+        "used": "0Bytes",
+        "total": "0Bytes",
+        "capacity": "0Bytes/0Bytes",
+        "capacityKnown": true,
+        "quota": "ok"
+      },
+      {
+        "name": "Sample Item 5",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxxx4",
+        "type": "Gmail",
+        "driveType": "gmail",
+        "email": "redacted@example.invalid",
+        "usedBytes": 0,
+        "totalBytes": 0,
+        "used": "0Bytes",
+        "total": "0Bytes",
+        "capacity": "0Bytes/0Bytes",
+        "capacityKnown": true,
+        "quota": "ok"
+      },
+      {
+        "name": "Sample Item 6",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxxx5",
+        "type": "Google Workspace",
+        "driveType": "gSuite",
+        "email": "redacted@example.invalid",
+        "usedBytes": 12939105259,
+        "totalBytes": 5497558138880,
+        "used": "12.05GB",
+        "total": "5.00TB",
+        "capacity": "12.05GB/5.00TB",
+        "capacityKnown": true,
+        "quota": "ok"
+      },
+      {
+        "name": "Sample Item 7",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxxx6",
+        "type": "Google Drive",
+        "driveType": "google_drive",
+        "email": "redacted@example.invalid",
+        "usedBytes": 59337881133191,
+        "totalBytes": 193745974722560,
+        "used": "53.97TB",
+        "total": "176.21TB",
+        "capacity": "53.97TB/176.21TB",
+        "capacityKnown": true,
+        "quota": "ok"
+      },
+      {
+        "name": "Sample Item 8",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxxx7",
+        "type": "Google Workspace",
+        "driveType": "gSuite",
+        "email": "redacted@example.invalid",
+        "usedBytes": 1828892895934,
+        "totalBytes": 16106127360,
+        "used": "1.66TB",
+        "total": "15.00GB",
+        "capacity": "1.66TB/15.00GB",
+        "capacityKnown": true,
+        "quota": "ok"
+      },
+      {
+        "name": "Sample Item 9",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxxx8",
+        "type": "Google Drive",
+        "driveType": "google_drive",
+        "email": "redacted@example.invalid",
+        "usedBytes": 52405266,
+        "totalBytes": 16106127360,
+        "used": "49.98MB",
+        "total": "15.00GB",
+        "capacity": "49.98MB/15.00GB",
+        "capacityKnown": true,
+        "quota": "ok"
+      },
+      {
+        "name": "Sample Item 10",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxxx9",
+        "type": "Google Workspace",
+        "driveType": "gSuite",
+        "email": "",
+        "usedBytes": null,
+        "totalBytes": null,
+        "used": null,
+        "total": null,
+        "capacity": null,
+        "capacityKnown": false,
+        "quota": "unavailable"
+      },
+      {
+        "name": "Sample Item 11",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx10",
+        "type": "Google Drive",
+        "driveType": "google_drive",
+        "email": "redacted@example.invalid",
+        "usedBytes": 1118571988394,
+        "totalBytes": 5497558138880,
+        "used": "1.02TB",
+        "total": "5.00TB",
+        "capacity": "1.02TB/5.00TB",
+        "capacityKnown": true,
+        "quota": "ok"
+      },
+      {
+        "name": "Sample Item 12",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx11",
+        "type": "Google Workspace",
+        "driveType": "gSuite",
+        "email": "redacted@example.invalid",
+        "usedBytes": 107399030746,
+        "totalBytes": 107374182400,
+        "used": "100.02GB",
+        "total": "100.00GB",
+        "capacity": "100.02GB/100.00GB",
+        "capacityKnown": true,
+        "quota": "ok"
+      },
+      {
+        "name": "Sample Item 13",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx12",
+        "type": "Google Drive",
+        "driveType": "google_drive",
+        "email": "redacted@example.invalid",
+        "usedBytes": 98432,
+        "totalBytes": 16106127360,
+        "used": "96.13KB",
+        "total": "15.00GB",
+        "capacity": "96.13KB/15.00GB",
+        "capacityKnown": true,
+        "quota": "ok"
+      },
+      {
+        "name": "Sample Item 14",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx13",
+        "type": "Google Drive",
+        "driveType": "google_drive",
+        "email": "",
+        "usedBytes": null,
+        "totalBytes": null,
+        "used": null,
+        "total": null,
+        "capacity": null,
+        "capacityKnown": false,
+        "quota": "unavailable"
+      },
+      {
+        "name": "Sample Item 15",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx14",
+        "type": "Google Drive",
+        "driveType": "google_drive",
+        "email": "redacted@example.invalid",
+        "usedBytes": 1195466,
+        "totalBytes": 16106127360,
+        "used": "1.14MB",
+        "total": "15.00GB",
+        "capacity": "1.14MB/15.00GB",
+        "capacityKnown": true,
+        "quota": "ok"
+      },
+      {
+        "name": "Sample Item 16",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx15",
+        "type": "Google Drive (Shared)",
+        "driveType": "google_drive_sharedWithMe",
+        "email": "redacted@example.invalid",
+        "usedBytes": 107399030746,
+        "totalBytes": 107374182400,
+        "used": "100.02GB",
+        "total": "100.00GB",
+        "capacity": "100.02GB/100.00GB",
+        "capacityKnown": true,
+        "quota": "ok"
+      },
+      {
+        "name": "Sample Item 17",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx16",
+        "type": "Google Photos",
+        "driveType": "googlePhotos",
+        "email": "redacted@example.invalid",
+        "usedBytes": 0,
+        "totalBytes": 0,
+        "used": "0Bytes",
+        "total": "0Bytes",
+        "capacity": "0Bytes/0Bytes",
+        "capacityKnown": true,
+        "quota": "ok"
+      },
+      {
+        "name": "Sample Item 18",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx17",
+        "type": "Google Photos",
+        "driveType": "googlePhotos",
+        "email": "redacted@example.invalid",
+        "usedBytes": 0,
+        "totalBytes": 0,
+        "used": "0Bytes",
+        "total": "0Bytes",
+        "capacity": "0Bytes/0Bytes",
+        "capacityKnown": true,
+        "quota": "ok"
+      },
+      {
+        "name": "Sample Item 19",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx18",
+        "type": "OneDrive for Business",
+        "driveType": "oneDrive4Business",
+        "email": "",
+        "usedBytes": null,
+        "totalBytes": null,
+        "used": null,
+        "total": null,
+        "capacity": null,
+        "capacityKnown": false,
+        "quota": "unavailable"
+      },
+      {
+        "name": "Sample Item 20",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx19",
+        "type": "OneDrive",
+        "driveType": "oneDriveV2",
+        "email": "",
+        "usedBytes": null,
+        "totalBytes": null,
+        "used": null,
+        "total": null,
+        "capacity": null,
+        "capacityKnown": false,
+        "quota": "unavailable"
+      },
+      {
+        "name": "Sample Item 21",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx20",
+        "type": "OneDrive",
+        "driveType": "oneDriveV2",
+        "email": "redacted@example.invalid",
+        "usedBytes": 1151898,
+        "totalBytes": 5368709120,
+        "used": "1.10MB",
+        "total": "5.00GB",
+        "capacity": "1.10MB/5.00GB",
+        "capacityKnown": true,
+        "quota": "ok"
+      },
+      {
+        "name": "Sample Item 22",
+        "id": "fakexxxxxxxxxxxxxxxxxxxxxxxxxx21",
+        "type": "OneDrive",
+        "driveType": "oneDriveV2",
+        "email": "",
+        "usedBytes": null,
+        "totalBytes": null,
+        "used": null,
+        "total": null,
+        "capacity": null,
+        "capacityKnown": false,
+        "quota": "unavailable"
+      }
+    ]
+  }
+}

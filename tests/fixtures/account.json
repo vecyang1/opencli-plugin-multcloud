@@ -1,0 +1,43 @@
+{
+  "capturedFor": "account",
+  "capturedBy": "tests/harness/record.js",
+  "scrubbed": true,
+  "traffic": [
+    {
+      "kind": "eval",
+      "payload": "(() => {\n  return {\n    isOpen: location.href.includes('multcloud.com'),\n    url: location.href,\n    isLoggedIn: !location.href.includes('sign.html') && !location.href.includes('login.html')\n  };\n})()",
+      "stdout": "{\n  \"isLoggedIn\": true,\n  \"isOpen\": true,\n  \"url\": \"https://app.multcloud.com/mc_project/home_page\"\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n  return {\n    isOpen: location.href.includes('multcloud.com'),\n    url: location.href,\n    isLoggedIn: !location.href.includes('sign.html') && !location.href.includes('login.html')\n  };\n})()",
+      "stdout": "{\n  \"isLoggedIn\": true,\n  \"isOpen\": true,\n  \"url\": \"https://app.multcloud.com/mc_project/home_page\"\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => location.href)()",
+      "stdout": "https://app.multcloud.com/mc_project/home_page\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n  return {\n    isOpen: location.href.includes('multcloud.com'),\n    url: location.href,\n    isLoggedIn: !location.href.includes('sign.html') && !location.href.includes('login.html')\n  };\n})()",
+      "stdout": "{\n  \"isLoggedIn\": true,\n  \"isOpen\": true,\n  \"url\": \"https://app.multcloud.com/mc_project/home_page\"\n}\n"
+    },
+    {
+      "kind": "eval",
+      "payload": "(() => {\n    const bodyText = document.body.innerText;\n    \n    // Find traffic\n    const trafficMatch = bodyText.match(/Traffic:\\s*([0-9.]+\\s*(?:GB|MB|TB|KB))\\s*\\/\\s*(\\S+)/i);\n    const planMatch = bodyText.includes('Lifetime Unlimited') ? 'Lifetime Unlimited' : (bodyText.includes('Unlimited') ? 'Unlimited' : 'Standard');\n    \n    // Find user profile email or avatar\n    const userBtn = document.querySelector('.user-info, .user_name, [class*=\"user\"], .header-user');\n    const userEmail = userBtn?.innerText?.trim() || 'Logged In User';\n\n    return {\n      ok: true,\n      plan: planMatch,\n      planKnown: bodyText.includes('Unlimited'),\n      // null, not a plausible-looking default: an unreadable quota that prints\n      // as a number is a number the user will act on.\n      trafficUsed: trafficMatch ? trafficMatch[1] : null,\n      trafficTotal: trafficMatch ? trafficMatch[2] : null,\n      trafficSummary: trafficMatch ? (trafficMatch[1] + ' / ' + trafficMatch[2]) : null,\n      trafficKnown: !!trafficMatch,\n      user: userEmail,\n      url: location.href\n    };\n  })()",
+      "stdout": "{\n  \"ok\": true,\n  \"plan\": \"Lifetime Unlimited\",\n  \"planKnown\": true,\n  \"trafficKnown\": true,\n  \"trafficSummary\": \"1681.93GB / Unlimited\",\n  \"trafficTotal\": \"Unlimited\",\n  \"trafficUsed\": \"1681.93GB\",\n  \"url\": \"https://app.multcloud.com/mc_project/home_page\",\n  \"user\": \"Sample Item 1\"\n}\n"
+    }
+  ],
+  "result": {
+    "ok": true,
+    "plan": "Lifetime Unlimited",
+    "planKnown": true,
+    "trafficKnown": true,
+    "trafficSummary": "1681.93GB / Unlimited",
+    "trafficTotal": "Unlimited",
+    "trafficUsed": "1681.93GB",
+    "url": "https://app.multcloud.com/mc_project/home_page",
+    "user": "Sample Item 1"
+  }
+}
