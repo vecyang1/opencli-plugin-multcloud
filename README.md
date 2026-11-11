@@ -181,6 +181,13 @@ explains the chokepoint, the navigation contract and the builder-page widgets.
 permits in-place renaming of transfer tasks. Set `MULTCLOUD_HOME` to relocate it;
 anything writing there under test must.
 
+## Agent 接入与分布式共建
+
+Agent接入后可自行推理, 也可以完善和提交回改进。
+
+- **自主推理与执行**：Agent 接入本仓库后，可通过 `--help`、结构化输出或内置诊断命令自行推理调用链路与参数契约，无需人工逐步拆解。
+- **分布式改进与回馈**：当在实际使用中由 Agent 扩展了新适配器、修复了边界问题或优化了工作流，欢迎直接让 Agent 运行测试套件并通过 `gh pr create` 提交改进，共同演进本仓库。
+
 ## License
 
 AGPL-3.0-or-later. See [LICENSE](LICENSE).
